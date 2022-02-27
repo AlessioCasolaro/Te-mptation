@@ -1,0 +1,45 @@
+<!-- products display -->
+<div class="container d-flex justify-content-center mt-100 mb-50">
+  <div class="row">
+    <div class="col-md-10">
+      {{# each datas}}
+      <div class="card card-body mt-3">
+        <div class="media align-items-center align-items-lg-start text-center text-lg-left flex-column flex-lg-row">
+          <div class="mr-2 mb-3 mb-lg-0"> <img src="{{this.imagePath}}" width="150" height="150" alt=""> </div>
+          <div class="media-body">
+            <h6 class="media-title font-weight-semibold">
+              {{ this.title}}
+            </h6>
+            <p class="mb-3">
+              {{ this.description}}
+            </p>
+          </div>
+          <div class="mt-3 mt-lg-0 ml-lg-3 text-center">
+            <h4 class="mt-10 mb-0 font-weight-semibold">
+              Prezzo:
+            </h4>
+            <p>
+              {{this.price}} €
+            </p>
+            <a type="button" class="btn btn-warning text-white" href="/add_to_cart/{{this._id}}"><i
+                class="icon-cart-add"></i> Aggiungi al carrello</a>
+          </div>
+        </div>
+      </div>
+      {{/each}}
+      <!-- pagination -->
+      <div class="row">
+        <div class="col">
+          <div class="pagination pagination-centered">
+            <ul>
+              {{#paginate pagination }}
+              <li {{#if disabled}}class="disabled" {{/if}}><a href="?p={{n}}">First</a>First</li>
+              {{/paginate}}
+
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

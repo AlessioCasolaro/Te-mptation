@@ -1,0 +1,50 @@
+<style>
+  #header{
+    display: none;
+  }
+</style>
+<div class="container">
+  {{#if hasErrors}}
+  <div class="alert alert-danger">
+    {{# each messages}}
+    <p>{{this}}</p>
+    {{/each}}
+  </div>
+  {{/if}}
+  <div class="row px-3">
+    <div class="col-lg-10 col-xl-9 card flex-row mx-auto px-0">
+      <div class="img-left-login d-none d-md-flex"></div>
+
+      <div class="card-body">
+        <h4 class="title text-center mt-4">
+          Login
+        </h4>
+        <form class="form-box px-3" action="/user/login" method="post">
+          <div class="form-input">
+            <span><i class="fa fa-envelope-o"></i></span>
+            <input type="text" name="username" placeholder="Il tuo username..." tabindex="10" required>
+          </div>
+          <div class="form-input">
+            <span><i class="fa fa-key"></i></span>
+            <input type="password" name="password" placeholder="La tua password..." required>
+          </div>
+
+          <input type="hidden" name="_csrf" value={{ csrfToken }}>
+          
+          <div class="mb-3">
+            <button type="submit" class="btn btn-block text-uppercase">Login</button>
+          </div>
+          <hr class="my-4">
+
+        </form>
+        <div class="text-center mb-2">
+            Non hai un account?
+            <a href="user/register" class="register-link">
+              Registrati
+            </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <link rel="stylesheet" type="text/css" href="/css/login.css">
+</div>
