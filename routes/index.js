@@ -5,11 +5,10 @@ const Cart = require('../models/cart');
 const Order = require('../models/order');
 const hbs = require('hbs');
 
-//handlebars-paginate helper
 const paginate = require('express-handlebars-paginate');
-
 hbs.registerHelper('paginate', paginate.createPagination);
-/* GET home page. */
+
+// GET home page.
 router.get('/', function(req, res, next) {
   console.log("Utente in sessione: "+ req.user)
   const successMsg = req.flash('success')[0];
@@ -37,7 +36,7 @@ router.get('/stuff', (req, res, next)=>{
     for (var i = 0; i <result.length; i+=chunkSize){
       dataChunks.push(result.slice(i, i + chunkSize));
     }
-    //set current page if specifed as get variable (eg: /?page=2)
+    //set current page if specifed as get variable (es: /?page=2)
 if (typeof req.query.page !== 'undefined') {
   currentPage = +req.query.page;
 }
@@ -49,7 +48,7 @@ resultList = dataChunks[+currentPage - 1];
       // Pagination data:
     pagination: {
       page: 1,       // The current page the user is on
-      limit: 2 // The total number of available pages
+      limit: 2      // The total number of available pages
     }
   });
 
@@ -69,7 +68,7 @@ router.get('/add_to_cart/:id', function(req, res, next){
     cart.add(product, product.id);
     req.session.cart = cart;
     console.log(req.session.cart);
-    res.redirect('/cart');
+    res.redirect('/stuff');
   });
 });
 
@@ -79,7 +78,7 @@ router.get('/cart', (req,res,next)=>{
     return res.render('cart', {products: null});
   }
   const cart = new Cart(req.session.cart);
-  res.render('cart', {products: cart.generateArray(), totalPrice: cart.totalPrice});
+  res.render('cart', {products: cart.generateArray(), totalPrice: cart.totalPrice.toFixed(2)});
 });
 
 //Checkout route
@@ -99,7 +98,7 @@ router.post('/checkout',isLoggedin,(req, res, next)=>{
       return res.redirect('/cart');
   }
 
-  //
+  //Get today date
   var today = new Date();
   var currentData = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
 
@@ -115,13 +114,23 @@ router.post('/checkout',isLoggedin,(req, res, next)=>{
   //save order in database
   order.save((err, result)=>{
     //process after succesful transaction
-    //Should install an if(err) statement at a later date
     req.flash('success', 'Acquisto effettuato con successo!');
     req.session.cart = null;
     res.redirect('/');
     });
 
 });
+
+//Indexing articles
+router.get('/article1',(req, res)=>{
+  res.render('articles/article1');
+});
+
+router.get('/article2',(req, res)=>{
+  res.render('articles/article2');
+});
+
+
 
 module.exports = router;
 

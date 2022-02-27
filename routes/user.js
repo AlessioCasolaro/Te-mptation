@@ -10,7 +10,7 @@ const Cart = require('../models/cart');
 const csrfProtection = csrf({ cookie: true });
 router.use(csrfProtection);
 
-//TODO AGGIUGERE CONTROLLO SE LOGGATO
+
 router.get('/dashboard', (req, res, next)=>{
   Order.find((err, orders)=>{
     if(err){
@@ -80,7 +80,6 @@ router.post('/register', passport.authenticate('local.register',{
 });
 
 
-
 //route to profile page
 router.get('/login', (req, res, next)=>{
   const messages = req.flash('error');
@@ -92,7 +91,7 @@ router.post('/login', passport.authenticate('local.login',{
   failureRedirect: '/login',
   failureFlash: true
 }),
-//after succesful login move on to either profile or checkout pg
+//after succesful login move on to profile page
   (req, res, next)=>{
   if (req.session.oldUrl){
     const oldUrl = req.session.oldUrl;
@@ -104,10 +103,10 @@ router.post('/login', passport.authenticate('local.login',{
 });
 
 
-
 module.exports = router;
 
-//make sure users are authenticated before accessing profile page
+//USER CHECK FUNCTIONS
+//make sure users ARE authenticated before accessing profile page
 function isLoggedin(req, res, next){
   if (req.isAuthenticated()){
     return next();

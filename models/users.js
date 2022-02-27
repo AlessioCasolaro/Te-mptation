@@ -18,7 +18,7 @@ userSchema.methods.encryptPassword = (password)=>{
   return bcrypt.hashSync(password, bcrypt.genSaltSync(5), null);
 };
 
-//check if  passwords are the same
+//check if passwords are the same
 userSchema.methods.validPassword = function(password){
   return bcrypt.compareSync(password, this.password);
 };
