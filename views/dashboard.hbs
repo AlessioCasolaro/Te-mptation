@@ -8,8 +8,8 @@
                                 <div class="card mb-4">
                                     <div class="card-header">
                                         <i class="fas fa-chart-area me-1"></i>
-                                        Area Chart Example
-                                        <i class="fa fa-refresh" aria-hidden="true"></i>
+                                        Drink più popolari di sempre
+                                        <button class="button border-0" style="background-color: transparent;"><i class="fa fa-refresh" aria-hidden="true"></i></button>
                                     </div>
                                     <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
                                 </div>
@@ -18,7 +18,7 @@
                                 <div class="card mb-4">
                                     <div class="card-header">
                                         <i class="fas fa-chart-bar me-1"></i>
-                                        Bar Chart Example
+                                        Andamento drink
                                     </div>
                                     <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
                                 </div>
@@ -73,7 +73,6 @@
                             </div>
                         </div>
                     </div>
-                    <div id="chartContainer" style="height: 370px; width: 100%;"></div>
                 </main>
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
@@ -89,11 +88,18 @@
                 </footer>
             </div>
         </div>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script>
+            $("button").click(function(){
+                $.getScript("../javascripts/dashboard/charts/reload.js");
+            });
+        </script>
+    
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="../javascripts/dashboard/scripts.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-        <!--<script src="https://alessiocasolaro.blob.core.windows.net/jsfiles/chart-area-demo.js"></script>-->
-        <script src="../javascripts/dashboard/charts/chart-area-demo.js"></script>
+        <script src="https://alessiocasolaro.blob.core.windows.net/jsfiles/chart-area.js"></script>
+      
         <script src="../javascripts/dashboard/charts/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="../javascripts/dashboard/datatables-simple-demo.js"></script>
@@ -101,4 +107,3 @@
 
         <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
         <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-         <script src="../javascripts/dashboard/charts/data.js"></script>
