@@ -9,7 +9,7 @@
                                     <div class="card-header">
                                         <i class="fas fa-chart-area me-1"></i>
                                         Drink più popolari di sempre
-                                        <button class="button border-0" style="background-color: transparent;"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+                                        <button class="button border-0" id="button" style="background-color: transparent;"><i class="fa fa-refresh" aria-hidden="true"></i></button>
                                     </div>
                                     <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
                                 </div>
@@ -19,6 +19,8 @@
                                     <div class="card-header">
                                         <i class="fas fa-chart-bar me-1"></i>
                                         Andamento drink
+                                        <input id="inputQuery2">
+                                        <button class="button2 border-0" id="button2" style="background-color: transparent;"><i class="fa fa-refresh" aria-hidden="true"></i></button>
                                     </div>
                                     <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
                                 </div>
@@ -90,8 +92,22 @@
         </div>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script>
-            $("button").click(function(){
-                $.getScript("../javascripts/dashboard/charts/reload.js");
+            $("#button").click(function(){
+                var str = 'http://localhost:7071/api/FunctionApp';
+                var xmlHttp = new XMLHttpRequest();
+                xmlHttp.open( "GET", str, false ); // false for synchronous request
+                setInterval(location.reload(true),3000);
+                xmlHttp.send( null );
+                return xmlHttp.responseText;
+            });
+            $("#button2").click(function(){
+                var input = String($('#inputQuery2').val());
+                var str = 'http://localhost:7071/api/FunctionApp?name=' + input;
+                var xmlHttp = new XMLHttpRequest();
+                xmlHttp.open( "GET", str, false ); // false for synchronous request
+                setInterval(location.reload(true),3000);
+                xmlHttp.send( null );
+                return xmlHttp.responseText;
             });
         </script>
     
@@ -99,8 +115,7 @@
         <script src="../javascripts/dashboard/scripts.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
         <script src="https://alessiocasolaro.blob.core.windows.net/jsfiles/chart-area.js"></script>
-      
-        <script src="../javascripts/dashboard/charts/chart-bar-demo.js"></script>
+        <script src="https://alessiocasolaro.blob.core.windows.net/jsfiles/chart-bar.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="../javascripts/dashboard/datatables-simple-demo.js"></script>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
