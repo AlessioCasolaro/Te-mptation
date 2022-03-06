@@ -3,6 +3,7 @@ const router = express.Router();
 const Product = require('../models/data');
 const Cart = require('../models/cart');
 const Order = require('../models/order');
+const Extra = require('../models/extra');
 const hbs = require('hbs');
 
 const paginate = require('express-handlebars-paginate');
@@ -81,15 +82,26 @@ router.get('/cart', (req,res,next)=>{
   res.render('cart', {products: cart.generateArray(), totalPrice: cart.totalPrice.toFixed(2)});
 });
 
+//Querying all Extra for CheckoutSelect
+const arrExtra = [];
+Extra.find((err, result)=>{
+  result.forEach(function(result){
+    arrExtra.push(result.extraName.toString());
+  });
+});
+
 //Checkout route
 router.get('/checkout', isLoggedin, (req, res, next)=>{
+  
   //check to see if a shopping cart exists
   if(!req.session.cart){
       return res.redirect('/cart');
   }
+  
   const cart = new Cart(req.session.cart);
   const errMsg = req.flash('error')[0];
-  return res.render('checkout',{total: cart.totalPrice, errMsg: errMsg, noErrors: !errMsg});
+  console.log(arrExtra)
+  return res.render('checkout',{total: cart.totalPrice,extras:arrExtra, errMsg: errMsg, noErrors: !errMsg});
 });
 
 router.post('/checkout',isLoggedin,(req, res, next)=>{
@@ -103,13 +115,16 @@ router.post('/checkout',isLoggedin,(req, res, next)=>{
   var currentData = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
 
   const cart = new Cart(req.session.cart);
+  console.log(req.body.extra)
   const order = new Order({
     user: req.user,
     cart: cart,
     date: currentData,
     tableNumber: req.body.tableNumber,
     name: req.body.name,
+    extra: req.body.extra
   });
+  console.log(order)
 
   //save order in database
   order.save((err, result)=>{

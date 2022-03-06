@@ -48,6 +48,7 @@ passport.use('local.register', new LocalStrategy({
     newUser.age = req.body.age;
     newUser.email = req.body.email;
     newUser.password = newUser.encryptPassword(password);
+    newUser.isAdmin = false;
     newUser.save((err, result)=>{
       if (err){
         return done(err);

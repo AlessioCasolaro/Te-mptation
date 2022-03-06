@@ -12,7 +12,7 @@ router.use(csrfProtection);
 
 
 router.get('/dashboard', (req, res, next)=>{
-  Order.find((err, orders)=>{
+  Order.find((err, orders, username)=>{
     if(err){
       return res.write("Errore nel caricamento del profilo.");
     }
@@ -22,9 +22,13 @@ router.get('/dashboard', (req, res, next)=>{
       cart = new Cart(order.cart);
       order.items = cart.generateArray();
     });
-  
-  
-  res.render('dashboard');
+  if(req.user)
+    if(req.user.isAdmin)
+      res.render('dashboardAdmin');
+    else
+      res.render('dashboard',{ orders: orders, username: req.user.username });
+  else
+    res.redirect('/');
   });
 });
 

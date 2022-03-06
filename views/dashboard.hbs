@@ -1,124 +1,82 @@
-
-            <div id="layoutSidenav_content" class="mt-100">
-                <main>
-                    <div class="container-fluid px-4">
-                        <h1 class="mt-4 mb-5">Dashboard</h1>
-                        <div class="row">
-                            <div class="col-xl-6">
-                                <div class="card mb-4">
-                                    <div class="card-header">
-                                        <i class="fas fa-chart-area me-1"></i>
-                                        Drink più popolari di sempre
-                                        <button class="button border-0" id="button" style="background-color: transparent;"><i class="fa fa-refresh" aria-hidden="true"></i></button>
-                                    </div>
-                                    <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
-                                </div>
-                            </div>
-                            <div class="col-xl-6">
-                                <div class="card mb-4">
-                                    <div class="card-header">
-                                        <i class="fas fa-chart-bar me-1"></i>
-                                        Andamento drink
-                                        <input id="inputQuery2">
-                                        <button class="button2 border-0" id="button2" style="background-color: transparent;"><i class="fa fa-refresh" aria-hidden="true"></i></button>
-                                    </div>
-                                    <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
-                                </div>
-                            </div>
+<div id="layoutSidenav_content" class="mt-100">
+    <main>
+        <div class="container-fluid px-4">
+            <h1 class="mt-4 mb-5">Dashboard</h1>
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-chart-area me-1"></i>
+                            Aggiunte più popolari di sempre
+                            <button class="button border-0" id="button" style="background-color: transparent;"><i
+                                    class="fa fa-refresh" aria-hidden="true"></i></button>
                         </div>
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-table me-1"></i>
-                                DataTable Example
-                            </div>
-                            <div class="card-body">
-                                <table id="datatablesSimple">
-                                    <thead>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Position</th>
-                                            <th>Office</th>
-                                            <th>Age</th>
-                                            <th>Start date</th>
-                                            <th>Salary</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Position</th>
-                                            <th>Office</th>
-                                            <th>Age</th>
-                                            <th>Start date</th>
-                                            <th>Salary</th>
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>61</td>
-                                            <td>2011/04/25</td>
-                                            <td>$320,800</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Garrett Winters</td>
-                                            <td>Accountant</td>
-                                            <td>Tokyo</td>
-                                            <td>63</td>
-                                            <td>2011/07/25</td>
-                                            <td>$170,750</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                        <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
                     </div>
-                </main>
-                <footer class="py-4 bg-light mt-auto">
-                    <div class="container-fluid px-4">
-                        <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; Your Website 2021</div>
-                            <div>
-                                <a href="#">Privacy Policy</a>
-                                &middot;
-                                <a href="#">Terms &amp; Conditions</a>
-                            </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-chart-bar me-1"></i>
+                            Andamento drink
+                            <input id="inputQuery2">
+                            <button class="button2 border-0" id="button2" style="background-color: transparent;"
+                                onclick="graph()"><i class="fa fa-refresh" aria-hidden="true"></i></button>
                         </div>
+                        <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
                     </div>
-                </footer>
+                </div>
+            </div>
+            <div class="card mb-4">
+                <div class="card-header">
+                    Storico acquisti
+                </div>
+                <div class="card-body">
+                    {{# each orders}}
+                    <div class="panel panel-default">
+                        <div class="panel-body mt-20">
+                            <!-- List group -->
+                            <ul class="list-group">
+                                {{#each this.items}}
+                                <li class="list-group-item">
+                                    <span class="badge">{{ this.price}} €</span>
+                                    {{ this.item.title }} | Quantità: {{this.qty}}
+                                </li>
+                                {{/each}}
+                            </ul>
+                        </div>
+                        <div class="panel-footer mt-10 mb-20">Totale ordine: {{ this.cart.totalPrice}}</div>
+                    </div>
+                    {{/each}}
+                </div>
             </div>
         </div>
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-        <script>
-            $("#button").click(function(){
-                var str = 'http://localhost:7071/api/FunctionApp';
-                var xmlHttp = new XMLHttpRequest();
-                xmlHttp.open( "GET", str, false ); // false for synchronous request
-                setInterval(location.reload(true),3000);
-                xmlHttp.send( null );
-                return xmlHttp.responseText;
-            });
-            $("#button2").click(function(){
-                var input = String($('#inputQuery2').val());
-                var str = 'http://localhost:7071/api/FunctionApp?name=' + input;
-                var xmlHttp = new XMLHttpRequest();
-                xmlHttp.open( "GET", str, false ); // false for synchronous request
-                setInterval(location.reload(true),3000);
-                xmlHttp.send( null );
-                return xmlHttp.responseText;
-            });
-        </script>
-    
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="../javascripts/dashboard/scripts.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-        <script src="https://alessiocasolaro.blob.core.windows.net/jsfiles/chart-area.js"></script>
-        <script src="https://alessiocasolaro.blob.core.windows.net/jsfiles/chart-bar.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
-        <script src="../javascripts/dashboard/datatables-simple-demo.js"></script>
-        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+    </main>
 
-        <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
-        <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+</div>
+</div>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>
+    $("#button").click(function () {
+        var str = 'http://localhost:7071/api/FunctionApp';
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open("GET", str, false); // false for synchronous request
+        setInterval(location.reload(true), 3000);
+        xmlHttp.send(null);
+        return xmlHttp.responseText;
+    });
+
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    crossorigin="anonymous"></script>
+<script src="../javascripts/dashboard/scripts.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+<script src="../javascripts/dashboard/charts/user/chart-area.js"></script>
+<script src="../javascripts/dashboard/charts/user/chart-bar.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+<script src="../javascripts/dashboard/datatables-simple-demo.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+
+<script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>

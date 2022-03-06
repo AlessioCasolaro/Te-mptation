@@ -1,19 +1,35 @@
 
-// Set new default font family and font color to mimic Bootstrap's default styling
+var url = 'https://statisticstrigger.azurewebsites.net/api/FunctionApp?user=admin';
+
+json = (function () {
+  var json = null;
+  $.ajax({
+      'async': false,
+      'global': false,
+      'url': url,
+      'dataType': "json",
+      'success': function (data) {
+          json = data;
+      }
+  });
+  return json;
+})(); 
+
+
 Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 Chart.defaults.global.defaultFontColor = '#292b2c';
 
 // Bar Chart Example
 var ctx = document.getElementById("myBarChart");
-var myLineChart = new Chart(ctx, {
+myLineChart = new Chart(ctx, {
   type: 'bar',
   data: {
-    labels: x,
+    labels: json.x2,
     datasets: [{
-      label: "Revenue",
+      label: "Acquistati",
       backgroundColor: "rgba(2,117,216,1)",
       borderColor: "rgba(2,117,216,1)",
-      data: y,
+      data: json.y2,
     }],
   },
   options: {
@@ -45,3 +61,4 @@ var myLineChart = new Chart(ctx, {
     }
   }
 });
+

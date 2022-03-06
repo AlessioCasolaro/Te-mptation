@@ -1,17 +1,31 @@
-// Set new default font family and font color to mimic Bootstrap's default styling
+
+var url = 'https://statisticstrigger.azurewebsites.net/api/FunctionApp?user=admin';
+
+var json = (function () {
+  var json = null;
+  $.ajax({
+      'async': false,
+      'global': false,
+      'url': url,
+      'dataType': "json",
+      'success': function (data) {
+          json = data;
+      }
+  });
+  return json;
+})(); 
+//console.log(json.x)
+
 Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 Chart.defaults.global.defaultFontColor = '#292b2c';
-var y = [1, 1, 1, 2, 1, 1];
-var x = ['Drink alla cannella', 'Drink alla sbunra', 'Dosha Kpaha', 'Rilassante piacere', 'Abbraccio vellutato', 'Abbraccio vellutato'];
 
-// Area Chart Example
 var ctx = document.getElementById("myAreaChart");
 var myLineChart = new Chart(ctx, {
   type: 'line',
   data: {
-    labels: x ,
+    labels: json.x ,
     datasets: [{
-      label: "Sessions",
+      label: "Acquistati",
       lineTension: 0.3,
       backgroundColor: "rgba(2,117,216,0.2)",
       borderColor: "rgba(2,117,216,1)",
@@ -22,7 +36,7 @@ var myLineChart = new Chart(ctx, {
       pointHoverBackgroundColor: "rgba(2,117,216,1)",
       pointHitRadius: 50,
       pointBorderWidth: 2,
-      data: y,
+      data: json.y,
     }],
   },
   options: {
@@ -41,7 +55,7 @@ var myLineChart = new Chart(ctx, {
       yAxes: [{
         ticks: {
           min: 0,
-          max: 50,
+          max: 20,
           maxTicksLimit: 5
         },
         gridLines: {

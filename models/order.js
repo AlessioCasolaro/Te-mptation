@@ -8,6 +8,7 @@ const schema = new Schema({
   date: {type: String, required: true},
   tableNumber: {type: String, required: true},
   name: {type: String, required: true},
+  extra: {type: String, required: true}
 });
 
 module.exports= mongoose.model('Order', schema);

@@ -9,9 +9,9 @@ module.exports = function Cart(oldCart){
       storedItem = this.items[id] = {item: item, qty: 0, price: 0};
     }
     storedItem.qty++;
-    storedItem.price = storedItem.item.price * storedItem.qty;
+    storedItem.price =  Number((storedItem.item.price * storedItem.qty).toPrecision(4));
     this.totalQty++;
-    this.totalPrice += storedItem.item.price;
+    this.totalPrice = Number((this.totalPrice + storedItem.item.price).toPrecision(4));
   }
   this.generateArray = function() {
     var arr= [];
