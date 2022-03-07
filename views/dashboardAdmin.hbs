@@ -8,7 +8,7 @@
                                 <div class="card mb-4">
                                     <div class="card-header">
                                         <i class="fas fa-chart-area me-1"></i>
-                                        Drink più popolari di sempre
+                                        Guadagni giornalieri
                                     </div>
                                     <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
                                 </div>
@@ -17,9 +17,30 @@
                                 <div class="card mb-4">
                                     <div class="card-header">
                                         <i class="fas fa-chart-bar me-1"></i>
-                                        Guadagno giornaliero
+                                        Andamento drink 
+                                        <input id="inputQuery2">
+                                        <button class="button2 border-0" id="button2" style="background-color: transparent;"
+                                            onclick="graph()"><i class="fa fa-refresh" aria-hidden="true"></i></button>
                                     </div>
                                     <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6">
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <i class="fas fa-chart-bar me-1"></i>
+                                        Drink più popolari di sempre
+                                    </div>   
+                                    <div class="card-body"><canvas id="drinkPopularity" width="100%" height="40"></canvas></div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6">
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <i class="fas fa-chart-bar me-1"></i>
+                                        Aggiunte più popolari di sempre 
+                                    </div>
+                                    <div class="card-body"><canvas id="extraPopularity" width="100%" height="40"></canvas></div>
                                 </div>
                             </div>
                         </div>
@@ -35,7 +56,8 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
         <script src="../javascripts/dashboard/charts/admin/chart-area.js"></script>
         <script src="../javascripts/dashboard/charts/admin/chart-bar.js"></script>
-
+        <script src="../javascripts/dashboard/charts/admin/chart-area2.js"></script>
+        <script src="../javascripts/dashboard/charts/admin/chart-pie.js"></script>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
 
         <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>

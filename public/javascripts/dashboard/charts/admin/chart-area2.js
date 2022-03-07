@@ -16,16 +16,13 @@ var json = (function () {
 })(); 
 //console.log(json.x)
 
-Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-Chart.defaults.global.defaultFontColor = '#292b2c';
-
-var ctx = document.getElementById("myAreaChart");
+var ctx = document.getElementById("drinkPopularity");
 var myLineChart = new Chart(ctx, {
   type: 'line',
   data: {
-    labels: json.x ,
+    labels: json.x3,
     datasets: [{
-      label: "Guadagni in €",
+      label: "Acquistati",
       lineTension: 0.3,
       backgroundColor: "rgba(2,117,216,0.2)",
       borderColor: "rgba(2,117,216,1)",
@@ -36,7 +33,7 @@ var myLineChart = new Chart(ctx, {
       pointHoverBackgroundColor: "rgba(2,117,216,1)",
       pointHitRadius: 50,
       pointBorderWidth: 2,
-      data: json.y,
+      data: json.y3,
     }],
   },
   options: {
@@ -55,7 +52,7 @@ var myLineChart = new Chart(ctx, {
       yAxes: [{
         ticks: {
           min: 0,
-          max: 150,
+          max: 20,
           maxTicksLimit: 5
         },
         gridLines: {

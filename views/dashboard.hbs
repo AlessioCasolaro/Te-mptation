@@ -7,9 +7,8 @@
                     <div class="card mb-4">
                         <div class="card-header">
                             <i class="fas fa-chart-area me-1"></i>
-                            Aggiunte più popolari di sempre
-                            <button class="button border-0" id="button" style="background-color: transparent;"><i
-                                    class="fa fa-refresh" aria-hidden="true"></i></button>
+                            Drink più popolari di sempre
+                            
                         </div>
                         <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
                     </div>
@@ -18,10 +17,8 @@
                     <div class="card mb-4">
                         <div class="card-header">
                             <i class="fas fa-chart-bar me-1"></i>
-                            Andamento drink
-                            <input id="inputQuery2">
-                            <button class="button2 border-0" id="button2" style="background-color: transparent;"
-                                onclick="graph()"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+                            Aggiunte più popolari di sempre
+                
                         </div>
                         <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
                     </div>
@@ -45,7 +42,7 @@
                                 {{/each}}
                             </ul>
                         </div>
-                        <div class="panel-footer mt-10 mb-20">Totale ordine: {{ this.cart.totalPrice}}</div>
+                        <div class="panel-footer mt-10 mb-20"><strong>Totale ordine: </strong>{{ this.cart.totalPrice}}</div>
                     </div>
                     {{/each}}
                 </div>
@@ -56,17 +53,6 @@
 </div>
 </div>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script>
-    $("#button").click(function () {
-        var str = 'http://localhost:7071/api/FunctionApp';
-        var xmlHttp = new XMLHttpRequest();
-        xmlHttp.open("GET", str, false); // false for synchronous request
-        setInterval(location.reload(true), 3000);
-        xmlHttp.send(null);
-        return xmlHttp.responseText;
-    });
-
-</script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
     crossorigin="anonymous"></script>

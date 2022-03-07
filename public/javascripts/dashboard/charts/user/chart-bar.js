@@ -27,7 +27,7 @@ myLineChart = new Chart(ctx, {
   data: {
     labels: json.x2,
     datasets: [{
-      label: "Guadagno in EURO",
+      label: "Quantità",
       backgroundColor: "rgba(2,117,216,1)",
       borderColor: "rgba(2,117,216,1)",
       data: json.y2,
@@ -49,7 +49,7 @@ myLineChart = new Chart(ctx, {
       yAxes: [{
         ticks: {
           min: 0,
-          max: 150,
+          max: 20,
           maxTicksLimit: 5
         },
         gridLines: {

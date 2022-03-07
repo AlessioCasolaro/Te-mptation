@@ -3,7 +3,7 @@ var myLineChart;
 function graph(){
 var input = document.getElementById("inputQuery2").value;
 console.log(input)
-var url = 'https://statisticstrigger.azurewebsites.net/api/FunctionApp?user=user&name='+input;
+var url = 'https://statisticstrigger.azurewebsites.net/api/FunctionApp?user=admin&name='+input;
 
 json = (function () {
   var json = null;
