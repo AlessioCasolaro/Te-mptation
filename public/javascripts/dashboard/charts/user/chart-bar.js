@@ -1,9 +1,4 @@
-var json;
-var myLineChart;
-function graph(){
-var input = document.getElementById("inputQuery2").value;
-console.log(input)
-var url = 'https://statisticstrigger.azurewebsites.net/api/FunctionApp?user=user&name='+input;
+var url = 'https://statisticstrigger.azurewebsites.net/api/FunctionApp?user=user';
 
 json = (function () {
   var json = null;
@@ -16,9 +11,11 @@ json = (function () {
           json = data;
       }
   });
+  console.log(json.x2,json.y2)
   return json;
 })(); 
-console.log(json.x)
+
+
 
 Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 Chart.defaults.global.defaultFontColor = '#292b2c';
@@ -30,7 +27,7 @@ myLineChart = new Chart(ctx, {
   data: {
     labels: json.x2,
     datasets: [{
-      label: "Acquistati",
+      label: "Guadagno in EURO",
       backgroundColor: "rgba(2,117,216,1)",
       borderColor: "rgba(2,117,216,1)",
       data: json.y2,
@@ -52,7 +49,7 @@ myLineChart = new Chart(ctx, {
       yAxes: [{
         ticks: {
           min: 0,
-          max: 20,
+          max: 150,
           maxTicksLimit: 5
         },
         gridLines: {
@@ -66,4 +63,3 @@ myLineChart = new Chart(ctx, {
   }
 });
 
-}

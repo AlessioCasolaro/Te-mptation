@@ -1,5 +1,9 @@
-
-var url = 'https://statisticstrigger.azurewebsites.net/api/FunctionApp?user=admin';
+var json;
+var myLineChart;
+function graph(){
+var input = document.getElementById("inputQuery2").value;
+console.log(input)
+var url = 'https://statisticstrigger.azurewebsites.net/api/FunctionApp?user=user&name='+input;
 
 json = (function () {
   var json = null;
@@ -14,7 +18,7 @@ json = (function () {
   });
   return json;
 })(); 
-
+console.log(json.x)
 
 Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 Chart.defaults.global.defaultFontColor = '#292b2c';
@@ -62,3 +66,4 @@ myLineChart = new Chart(ctx, {
   }
 });
 
+}
