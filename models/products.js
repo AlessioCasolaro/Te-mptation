@@ -13,4 +13,4 @@ schema.plugin(mongoosePaginate);
 
 
 
-module.exports= mongoose.model('Data', schema);
+module.exports= mongoose.model('Products', schema);

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Product = require('../models/data');
+const Product = require('../models/products');
 const Cart = require('../models/cart');
 const Order = require('../models/order');
 const Extra = require('../models/extra');
@@ -16,19 +16,20 @@ router.get('/', function(req, res, next) {
   res.render('index', { successMsg: successMsg, noMessage: !successMsg});
 });
 
+// GET home page.
+router.get('/bot', function(req, res, next) {
+  res.render('bot');
+});
 
 
-//load products on stuff page
 router.get('/stuff', (req, res, next)=>{
-
-
   Product.find((err, result)=>{
     //rwo size variables
     var dataChunks = [];
     var chunkSize = 6;
 
       //paginate variables
-    const pageSize = 6; //how many results by page
+    const pageSize = 10; //how many results by page
     const pageCount = Math.ceil(result.length/pageSize);
     let currentPage = 1; //set current page
     let resultList = [];
@@ -37,19 +38,17 @@ router.get('/stuff', (req, res, next)=>{
     for (var i = 0; i <result.length; i+=chunkSize){
       dataChunks.push(result.slice(i, i + chunkSize));
     }
-    //set current page if specifed as get variable (es: /?page=2)
+    //set current page if specifed
 if (typeof req.query.page !== 'undefined') {
   currentPage = +req.query.page;
 }
 // //show list of products
 resultList = dataChunks[+currentPage - 1];
-
-
     res.render('stuff',{ datas:resultList,
       // Pagination data:
     pagination: {
       page: 1,       // The current page the user is on
-      limit: 2      // The total number of available pages
+      limit: 10      // The total number of available pages
     }
   });
 

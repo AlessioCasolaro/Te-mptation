@@ -1,36 +1,41 @@
 <div class="row justify-content-center" style="margin-top: 8rem;">
   <div class="col-sm-6 col-md-4 col-md-offset-4 col-sm-offset-3 ">
-    <h1 class="text-center"><storng>CHECKOUT</storng></h1>
+    <h1 class="text-center">
+      <storng>CHECKOUT</storng>
+    </h1>
     <h4 class="text-center mt-10 mb-10">Totale: {{total}} €</h2>
-    <div  id = "charge-error"  class="alert alert-danger" {{#if noErrors}} hidden {{/if}}>
-      {{errMsg}}
-    </div>
-    <form action="/checkout" method="post" id ='checkout-form'>
-      <div class="row justify-content-center text-center">
-        <div class="col-xs-12 mr-2">
-          <div class="form-group">
-            <label for="name">Nome e Cognome</label>
-            <input type="text" id='name' class='form-control' required name="name">
-          </div>
-        </div>
-        <div class="col-xs-12 ml-2">
-          <div class="form-group">
-            <label for="tableNumber">Numero del tavolo</label>
-            <input type="text" id='tableNumber' class='form-control' required name="tableNumber">
-          </div>
-        </div>
+      <div id="charge-error" class="alert alert-danger" {{#if noErrors}} hidden {{/if}}>
+        {{errMsg}}
       </div>
-      <label for="extra">Aggiungi extra</label>
-      <select class="form-control" name="extra" id="extra">
-        <option value="empty" selected></option>
-        {{# each extras}}
+      <form action="/checkout" method="post" id='checkout-form'>
+        <div class="row justify-content-center text-center">
+          <div class="col-xs-12 mr-2">
+            <div class="form-group">
+              <label for="name">Nome e Cognome</label>
+              <input type="text" id='name' class='form-control' required name="name">
+            </div>
+          </div>
+          <div class="col-xs-12 ml-2">
+            <div class="form-group">
+              <label for="tableNumber">Numero del tavolo</label>
+              <input type="text" id='tableNumber' class='form-control' required name="tableNumber">
+            </div>
+          </div>
+        </div>
+        <label for="extra">Aggiungi extra</label>
+        <select class="form-control" name="extra" id="extra">
+          <option value="empty" selected></option>
+          {{# each extras}}
           <option value="{{this}}">{{this}}</option>
-        {{/each}}
-      </select>
-      <div class="row justify-content-center mt-50"><button type="submit" class="btn btn-success justify-content-center">Acquista</button></div>
-    </form>
+          {{/each}}
+        </select>
+        <div class="row justify-content-center mt-50"><button type="submit"
+            class="btn btn-success justify-content-center">Acquista</button></div>
+      </form>
   </div>
 </div>
+<iframe id="chat" class="botChat" style="display:none" src='' title="Connor Bot"></iframe>
+<button id="botButton" class="botButton" onclick="postYourAdd()" title="Connor Bot"><i class="fa fa-comments white"
+    aria-hidden="true"></i></button>
 
-
-
+<script src="../javascripts/bot/bot.js"></script>

@@ -27,7 +27,7 @@ app.use(cookieParser());
 app.use(session({
 	secret: "key per i cookie",
 	saveUninitialized: false,
-	resave: true,
+	resave: false,
 	store: MongoStore.create({ 
 		mongoUrl: process.env.URI,
 		autoRemove: 'disabled'
