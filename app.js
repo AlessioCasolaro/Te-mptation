@@ -13,10 +13,10 @@ const MongoStore = require('connect-mongo');
 const env = require('dotenv').config();
 const app = express();
 
+//Database connection
 mongoose.connect(process.env.URI,{ useNewUrlParser: true }, err => err?console.log(err):console.log('Successfully connected to MongoDB'));
 require('./config/passport');
 
-// view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 app.use(logger('dev'));
@@ -24,6 +24,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(validationResult());
 app.use(cookieParser());
+//Session settings
 app.use(session({
 	secret: "key per i cookie",
 	saveUninitialized: false,
@@ -47,7 +48,7 @@ app.use((req, res, next)=>{
   next();
 });
 
-//routes
+//Main Routes
 app.use('/',  require('./routes/index'));
 app.use('/user', require('./routes/user'));
 
@@ -59,11 +60,11 @@ app.use(function(req, res, next) {
 
 // error handler
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
+  //locals for error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
+  //Error page
   res.status(err.status || 500);
   res.render('error');
 });

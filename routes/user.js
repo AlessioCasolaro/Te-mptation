@@ -32,23 +32,6 @@ router.get('/dashboard', (req, res, next)=>{
   });
 });
 
-//route to profile page
-router.get('/profile', isLoggedin, (req, res, next)=>{
-  //query database
-  Order.find({user: req.user}, (err, orders , username)=>{
-    if(err){
-      return res.write("Errore nel caricamento del profilo.");
-    }
-    var cart;
-    // loop through orders
-    orders.forEach(function(order){
-      cart = new Cart(order.cart);
-      order.items = cart.generateArray();
-    });
-    res.render('profile',{ orders: orders, username: req.user.username });
-  });
-});
-
 //logout router
 router.get('/logout', (req, res, next)=>{
   req.logout();
@@ -61,41 +44,38 @@ router.use('/', notLoggedin,(req, res, next)=>{
   next();
 })
 
-// route to register page
+// route to register
 router.get('/register', (req, res, next)=> {
   const messages = req.flash('error');
   res.render('register',{csrfToken: req.csrfToken, messages: messages, hasErrors: messages.length > 0});
 
 });
-//direct to profile if registration is successful
 router.post('/register', passport.authenticate('local.register',{
   failureRedirect: '/user/register',
   failureFlash: true
 }),
-//after succesful registration move on to either profile or checkout pg
+//Route to dashboard if correctly registered
 (req, res, next)=>{
   if (req.session.oldUrl){
     const oldUrl = req.session.oldUrl;
     req.session.oldUrl = null;
     res.redirect(oldUrl);
   }else {
-      res.redirect('/user/profile');
+      res.redirect('/user/dashboard');
   }
 });
 
 
-//route to profile page
+//route to login
 router.get('/login', (req, res, next)=>{
   const messages = req.flash('error');
   res.render('login',{csrfToken: req.csrfToken, messages: messages, hasErrors: messages.length > 0})
 });
 
-//direct to profile if login successful
 router.post('/login', passport.authenticate('local.login',{
   failureRedirect: '/login',
   failureFlash: true
-}),
-//after succesful login move on to profile page
+}),//Go to index if user correctly logged in
   (req, res, next)=>{
   if (req.session.oldUrl){
     const oldUrl = req.session.oldUrl;

@@ -3,13 +3,13 @@ const User = require('../models/users');
 const LocalStrategy = require('passport-local').Strategy;
 
 
-//session code courtesy of passport.js
-passport.serializeUser((user, done)=>{
+//Temp session for passport
+passport.serializeUser((user, done) => {
   done(null, user.id);
 });
 
-passport.deserializeUser((id, done)=> {
-  User.findById(id, (err, user)=> {
+passport.deserializeUser((id, done) => {
+  User.findById(id, (err, user) => {
     done(err, user);
   });
 });
@@ -19,28 +19,27 @@ passport.use('local.register', new LocalStrategy({
   usernameField: 'username',
   passwordField: 'password',
   passReqToCallback: true
-}, (req, username, password, done)=> {
-  req.checkBody('username', 'Invalid Username').notEmpty();
-  req.checkBody('password', 'Invalid Password').notEmpty().isLength({min:6});
+}, (req, username, password, done) => {
+  req.checkBody('username', 'Invalid Username').notEmpty();//Make sure user is not empty
+  req.checkBody('password', 'Invalid Password').notEmpty().isLength({ min: 6 });//Make sure password is not empty and lenght>=6
   const errors = req.validationErrors();
-  if(errors){
+  if (errors) {
     const messages = [];
-    errors.forEach((error)=>{
+    errors.forEach((error) => {
       messages.push(error.msg);
     });
     return done(null, false, req.flash('error', messages));
   }
-  User.findOne({'username': username}, (err, user)=>{
-    if (err){
-
+  User.findOne({ 'username': username }, (err, user) => {
+    if (err) {
       return done(err);
     }
-    if (user){
-
-      return done(null, false, {message:'Email is already in use'});
-
+    //Check if user already exists
+    if (user) {
+      return done(null, false, { message: 'Username already in use' });
     }
-    console.log("User " + username +"\nnome " + req.body.nome+ "\nsurname " + req.surname + "\nAge " + req.age + "\nemail " + req.email + "\npassword " + password);
+    console.log("User " + username + "\nnome " + req.body.nome + "\nsurname " + req.surname + "\nAge " + req.age + "\nemail " + req.email + "\npassword " + password);
+    //User creation
     const newUser = new User();
     newUser.username = username;
     newUser.name = req.body.nome;
@@ -48,11 +47,14 @@ passport.use('local.register', new LocalStrategy({
     newUser.age = req.body.age;
     newUser.email = req.body.email;
     newUser.password = newUser.encryptPassword(password);
-    newUser.isAdmin = false;
-    newUser.save((err, result)=>{
-      if (err){
+    newUser.isAdmin = false;//IsAdmin Boolean for Dashboard
+    newUser.save((err, result) => {
+      //Return error in saving
+      if (err) {
         return done(err);
-      }return done(null, newUser);
+      }
+      //Return new user correctly saved 
+      return done(null, newUser);
     });
   });
 }));
@@ -62,28 +64,29 @@ passport.use('local.login', new LocalStrategy({
   usernameField: 'username',
   passwordField: 'password',
   passReqToCallback: true
-},(req, username, password, done)=>{
-  req.checkBody('username', 'Invalid Username').notEmpty();
-  req.checkBody('password', 'Invalid Password').notEmpty();
+}, (req, username, password, done) => {
+  req.checkBody('username', 'Invalid Username').notEmpty();//Make sure user is not empty
+  req.checkBody('password', 'Invalid Password').notEmpty();//Make sure password is not empty
   const errors = req.validationErrors();
-  if(errors){
+  if (errors) {
     const messages = [];
-    errors.forEach((error)=>{
+    errors.forEach((error) => {
       messages.push(error.msg);
     });
     return done(null, false, req.flash('error', messages));
   }
-  User.findOne({'username': username}, (err, user)=>{
-    if (err){
-
+  //Check if it exists
+  User.findOne({ 'username': username }, (err, user) => {
+    if (err) {
       return done(err);
     }
-    if (!user){
-      return done(null, false, {message:'No user found'});
+    //Error for user not existing
+    if (!user) {
+      return done(null, false, { message: 'No user found' });
     }
-    //check passwsord
-    if( !user.validPassword(password)){
-      return done(null, false, {message:'Wrong password'});
+    //check if password match
+    if (!user.validPassword(password)) {//validPassword passport.js funct
+      return done(null, false, { message: 'Wrong password' });
     }
     return done(null, user);
   });
